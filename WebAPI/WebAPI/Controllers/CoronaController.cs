@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,29 +10,37 @@ namespace WebAPI.Controllers
 {
     public class CoronaController : ApiController
     {
-        // GET: api/Corona
+        // GET: /Corona
+        [Route("Corona")]
+        [HttpGet]
         public List<Datum> Get()
         {
             CoronaOperations coop = new CoronaOperations();
-            return coop.GetTheRecords("SELECT * FROM theStats");
+            return coop.GetTheRecords(100, "ASC");
         }
 
+        /*
         // GET: api/Corona
         public List<Datum> Get(string country)
         {
             CoronaOperations coop = new CoronaOperations();
             return coop.GetTheRecords(string.Format("SELECT * FROM theStats WHERE countrycode = '{0}'", country));
         }
-
+        */
         // GET: api/Corona/5
         public string Get(int id)
         {
             return "value";
         }
 
+        // POST: /Corona
+        [Route("Corona")]
+        [HttpPost]
         // POST: api/Corona
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Datum datum)
         {
+            CoronaOperations coop = new CoronaOperations();
+            coop.InsertRecord(datum);
         }
 
         // PUT: api/Corona/5
